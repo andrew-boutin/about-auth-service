@@ -8,6 +8,11 @@ default: clean build run
 clean:
 	./gradlew clean
 
+# Test only.
+.PHONY: test
+test:
+	./gradlew test
+
 # Assembles and tests this project.
 .PHONY: build
 build:

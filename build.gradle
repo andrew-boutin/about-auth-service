@@ -39,4 +39,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     // TODO: Use latest and pin down.
     testCompile("junit:junit")
+    // TODO: Use latest and pin down.
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
