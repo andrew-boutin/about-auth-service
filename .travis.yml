@@ -4,6 +4,6 @@ install: true
 jdk:
 - openjdk8
 
-# --scan gives us dependencies and -s shows full stack traces.
+# -s shows full stack traces and -i gives us info log.
 script:
-- ./gradlew build -s
+- ./gradlew build -s -i
