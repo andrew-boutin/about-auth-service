@@ -31,7 +31,12 @@ sourceCompatibility = 1.8
 // Class files will run on this version and later, but not on earlier versions.
 targetCompatibility = 1.8
 
-// TODO: Look into "test { useJUnitPlatform() }"
+test {
+    // We'd like to see test output info.
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
 
 // All the things our project depends on. Placed on the classpath for the project.
 dependencies {
