@@ -6,4 +6,4 @@ jdk:
 
 # --scan gives us dependencies and -s shows full stack traces.
 script:
-- ./gradlew build --scan -s
+- ./gradlew build -s
