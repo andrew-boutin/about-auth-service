@@ -1,4 +1,4 @@
-package bakingbitsstudios;
+package bakingbitsstudios.test.functional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PermissionsControllerTest {
+public class PermissionsTest {
 
     @Autowired
     private MockMvc mvc;

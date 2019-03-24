@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PermissionsController {
     @RequestMapping("/")
     public String index() {
+        return getGreeting();
+    }
+
+    public String getGreeting() {
         return "Greetings from the auth server!";
     }
 }
