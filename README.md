@@ -1,6 +1,8 @@
 # About Auth Service
 
-About Auth Service is all about an auth service.
+All about an auth service for fun.
+
+This is an auth service REST API using the Spring Boot framework. It's built with Gradle.
 
 ---
 
