@@ -1,5 +1,42 @@
-task helloWorld {
-    doLast {
-        println 'Hello auth service!'
-    }
+// These plugins must be either core plugins (https://docs.gradle.org/current/userguide/plugin_reference.html) or
+// available in the Gradle plugin repository (https://plugins.gradle.org/).
+plugins {
+    // Adds Java compilation along with testing and bundling capabilities to a project.
+    id "java"
+    // Generates files for Eclipse compatibility.
+    id "eclipse"
+    // Generates files for Eclipse compatibility.
+    id "idea"
+    // For jar packaging, running application, and using spring-boot-dependencies dependency management.
+    id "org.springframework.boot" version "2.1.3.RELEASE"
+    // Provides Maven-like dependency management functionality.
+    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+}
+
+// BootJar is from applying java, and then Spring Boot adds some things on top such as the following.
+// All of the jars on the classpath are collected and built into a single executable jar. The main method is searched
+// for automatically. A built-in dependency resolver sets dependencies to match the Spring Boot dependencies.
+bootJar {
+    version =  '1.0.0'
+}
+
+// Where we'll get our dependencies from.
+repositories {
+    // Add Maven central to the list of places we'll get our project dependencies from.
+    mavenCentral()
+}
+
+// Java version used to compile .java files.
+sourceCompatibility = 1.8
+// Class files will run on this version and later, but not on earlier versions.
+targetCompatibility = 1.8
+
+// TODO: Look into "test { useJUnitPlatform() }"
+
+// All the things our project depends on. Placed on the classpath for the project.
+dependencies {
+    // TODO: Use latest and pin down. Determine what's bundled.
+    compile("org.springframework.boot:spring-boot-starter-web")
+    // TODO: Use latest and pin down.
+    testCompile("junit:junit")
 }
