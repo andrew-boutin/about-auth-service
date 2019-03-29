@@ -74,16 +74,21 @@ CRUDL - Requires `isSystemAdmin`.
 ## Mappings
 
 Tenants to Users
+
     tenantId, userId (PK both)
 
 Users to Roles
+
 	userId, roleId (PK both)
 
 Roles to Permissions
+
 	roleId, permissionId (PK both)
 
 Tenants to Entitlements
+
     tenantId, entitlementId (PK both)
 
 Entitlements to Permissions
+
     entitlementId, permissionId (PK both)
