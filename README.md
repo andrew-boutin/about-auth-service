@@ -4,7 +4,11 @@
 
 All about an auth service for fun.
 
-This is an auth service REST API using the Spring Boot framework. It's built with Gradle using Travis.
+This is an auth service REST API using the Spring Boot framework.
+
+It's built with Gradle using Travis.
+
+It has an API spec that follows the OpenAPI Specification.
 
 ---
 

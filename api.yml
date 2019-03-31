@@ -8,6 +8,8 @@ externalDocs:
 tags:
 - name: entitlements
   description: An entitlement represents the right to access a part of the system.
+- name: permissions
+  description: A permission represents the right to do a single action in the system.
 paths:
   /entitlements:
     get:
@@ -44,14 +46,14 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  '/entitlements/{entitlementId}':
+  '/entitlements/{id}':
     delete:
       summary: Delete a specific entitlement.
       operationId: deleteEntitlement
       tags:
       - entitlements
       parameters:
-      - $ref: '#/components/parameters/EntitlementIdPathParam'
+      - $ref: '#/components/parameters/IdPathParam'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -67,7 +69,7 @@ paths:
       tags:
       - entitlements
       parameters:
-      - $ref: '#/components/parameters/EntitlementIdPathParam'
+      - $ref: '#/components/parameters/IdPathParam'
       responses:
         '200':
           description: The entitlement for the given id.
@@ -87,7 +89,7 @@ paths:
       tags:
       - entitlements
       parameters:
-      - $ref: '#/components/parameters/EntitlementIdPathParam'
+      - $ref: '#/components/parameters/IdPathParam'
       responses:
         '200':
           description: The updated entitlement.
@@ -97,6 +99,44 @@ paths:
                 $ref: '#/components/schemas/Entitlement'
         '400':
           $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /permissions:
+    get:
+      summary: Retrieve a list of permissions.
+      operationId: listPermissions
+      tags:
+      - permissions
+      responses:
+        '200':
+          description: A list of permissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permissions'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  '/permissions/{id}':
+    get:
+      summary: Retrieve a specific permission.
+      operationId: getPermission
+      tags:
+      - permissions
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '200':
+          description: The permission for the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
         '403':
           $ref: '#/components/responses/403'
         '404':
@@ -120,12 +160,21 @@ components:
       required:
       - name
       allOf:
+      - $ref: '#/components/schemas/EntitlementSummary'
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+    EntitlementSummary:
+      type: object
+      required:
+      - name
+      allOf:
       - $ref: '#/components/schemas/EntitlementSystemDefined'
       - $ref: '#/components/schemas/EntitlementMutable'
     Entitlements:
       type: array
       items:
-        $ref: '#/components/schemas/Entitlement'
+        $ref: '#/components/schemas/EntitlementSummary'
     Error:
       required:
       - code
@@ -136,12 +185,25 @@ components:
           format: int32
         message:
           type: string
+    Permission:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Unique name of the entitlement.
+        id:
+          type: integer
+          format: int64
+    Permissions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Permission'
   parameters:
-    EntitlementIdPathParam:
-      name: entitlementId
+    IdPathParam:
+      name: id
       in: path
       required: true
-      description: The id of the entitlement to operate on.
+      description: The id of the resource to operate on.
       schema:
         type: string
   responses:
