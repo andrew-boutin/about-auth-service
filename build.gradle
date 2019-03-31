@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:3.3.4"
+    }
+}
+
 // These plugins must be either core plugins (https://docs.gradle.org/current/userguide/plugin_reference.html) or
 // available in the Gradle plugin repository (https://plugins.gradle.org/).
 plugins {
@@ -12,6 +22,8 @@ plugins {
     // Provides Maven-like dependency management functionality.
     id "io.spring.dependency-management" version "1.0.7.RELEASE"
 }
+
+apply plugin: 'org.openapi.generator'
 
 // BootJar is from applying java, and then Spring Boot adds some things on top such as the following.
 // All of the jars on the classpath are collected and built into a single executable jar. The main method is searched
@@ -46,4 +58,9 @@ dependencies {
     testCompile("junit:junit")
     // TODO: Use latest and pin down.
     testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+// Used for validating the API spec.
+openApiValidate() {
+    inputSpec = "api.yml"
 }

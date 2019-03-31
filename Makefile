@@ -1,7 +1,12 @@
 # So we can see what commands get ran from the command line output.
 SHELL = sh -xv
 
-default: clean build run
+default: clean validateSpec build run
+
+# Validate the API spec.
+.PHONY: validateSpec
+validateSpec:
+	./gradlew openApiValidate
 
 # Deletes the build directory.
 .PHONY: clean
