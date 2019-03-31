@@ -11,7 +11,9 @@ tags:
 - name: permissions
   description: A permission represents the right to do a single action in the system.
 - name: roles
-  description: A role represents a set of permissions required to fulfill common use cases in the system.
+  description: A role represents a set of permissions required to fulfill a use case in the system.
+- name: tenants
+  description: A tenant provides a way to group common users and permissions.
 paths:
   /entitlements:
     get:
@@ -241,6 +243,100 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /tenants:
+    get:
+      summary: Retrieve a list of tenants.
+      operationId: listTenants
+      tags:
+      - tenants
+      responses:
+        '200':
+          description: A list of tenants.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenants'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      summary: Create a tenant.
+      operationId: createTenant
+      tags:
+      - tenants
+      responses:
+        '201':
+          description: The created tenant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  '/tenants/{id}':
+    delete:
+      summary: Delete a specific tenant.
+      operationId: deleteTenant
+      tags:
+      - tenants
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      summary: Retrieve a specific tenant.
+      operationId: getTenant
+      tags:
+      - tenants
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '200':
+          description: The tenant for the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: Update a specific tenant.
+      operationId: updateTenant
+      tags:
+      - tenants
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '200':
+          description: The updated tenant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
     EntitlementSystemDefined:
@@ -288,7 +384,7 @@ components:
       properties:
         name:
           type: string
-          description: Unique name of the entitlement.
+          description: Unique name of the permission.
         id:
           type: integer
           format: int64
@@ -334,6 +430,36 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/RoleSummary'
+    TenantSystemDefined:
+      properties:
+        id:
+          type: integer
+          format: int64
+    TenantMutable:
+      properties:
+        name:
+          type: string
+          description: Unique name of the tenant.
+    TenantSummary:
+      type: object
+      required:
+      - name
+      allOf:
+      - $ref: '#/components/schemas/TenantSystemDefined'
+      - $ref: '#/components/schemas/TenantMutable'
+    Tenant:
+      type: object
+      required:
+      - name
+      allOf:
+      - $ref: '#/components/schemas/TenantSummary'
+      properties:
+        entitlements:
+          $ref: '#/components/schemas/Entitlements'
+    Tenants:
+      type: array
+      items:
+        $ref: '#/components/schemas/TenantSummary'
   parameters:
     IdPathParam:
       name: id
