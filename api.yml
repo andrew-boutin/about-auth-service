@@ -346,6 +346,8 @@ paths:
       tags:
       - users
       parameters:
+      - $ref: '#/components/parameters/IsSystemAdminQueryParam'
+      - $ref: '#/components/parameters/IsTenantAdminQueryParam'
       - $ref: '#/components/parameters/TenantIdQueryParam'
       responses:
         '200':
@@ -592,6 +594,7 @@ components:
       items:
         $ref: '#/components/schemas/User'
   parameters:
+    # Path parameters.
     IdPathParam:
       name: id
       in: path
@@ -599,6 +602,19 @@ components:
       description: The id of the resource to operate on.
       schema:
         type: string
+    # Query parameters.
+    IsSystemAdminQueryParam:
+      name: isSystemAdmin
+      in: query
+      description: Filter the results for either all system admins or none.
+      schema:
+        type: boolean
+    IsTenantAdminQueryParam:
+      name: isTenantAdmin
+      in: query
+      description: Filter the results for either all tenant admins or none.
+      schema:
+        type: boolean
     TenantIdQueryParam:
       name: tenantId
       in : query
