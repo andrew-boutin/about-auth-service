@@ -13,9 +13,11 @@ tags:
 - name: roles
   description: A role represents a set of permissions required to fulfill a use case in the system.
 - name: tenants
-  description: A tenant provides a way to group common users and permissions.
+  description: A tenant provides a way to isolate users, access, and restrictions across customers.
 - name: users
   description: A user is a single end user of the system.
+- name: userGroups
+  description: A user group provides a way to manage access and restrictions on multiple users.
 paths:
   /entitlements:
     get:
@@ -437,6 +439,102 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /userGroups:
+    get:
+      summary: Retrieve a list of user groups.
+      operationId: listUserGroups
+      tags:
+      - userGroups
+      parameters:
+      - $ref: '#/components/parameters/TenantIdQueryParam'
+      responses:
+        '200':
+          description: A list of user groups.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroups'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      summary: Create a user group.
+      operationId: createUserGroup
+      tags:
+      - userGroups
+      responses:
+        '201':
+          description: The created user group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroup'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  '/userGroups/{id}':
+    delete:
+      summary: Delete a specific user group.
+      operationId: deleteUserGroup
+      tags:
+      - userGroups
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    get:
+      summary: Retrieve a specific user group.
+      operationId: getUserGroup
+      tags:
+      - userGroups
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '200':
+          description: The user group for the given id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroup'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: Update a specific user group.
+      operationId: updateUserGroup
+      tags:
+      - userGroups
+      parameters:
+      - $ref: '#/components/parameters/IdPathParam'
+      responses:
+        '200':
+          description: The updated user group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroup'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   schemas:
     EntitlementSystemDefined:
@@ -593,6 +691,44 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/User'
+    UserGroupImmutable:
+      properties:
+        tenantId:
+          type: integer
+          format: int64
+    UserGroupSystemDefined:
+      properties:
+        id:
+          type: integer
+          format: int64
+    UserGroupMutable:
+      properties:
+        name:
+          type: string
+          description: Unique name, within the tenant, of the user group.
+    UserGroupSummary:
+      type: object
+      required:
+      - name
+      allOf:
+      - $ref: '#/components/schemas/UserGroupImmutable'
+      - $ref: '#/components/schemas/UserGroupSystemDefined'
+      - $ref: '#/components/schemas/UserGroupMutable'
+    UserGroup:
+      type: object
+      required:
+      - name
+      allOf:
+      - $ref: '#/components/schemas/UserGroupSummary'
+      properties:
+        users:
+          $ref: '#/components/schemas/Users'
+        roles:
+          $ref: '#/components/schemas/Roles'
+    UserGroups:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserGroupSummary'
   parameters:
     # Path parameters.
     IdPathParam:
