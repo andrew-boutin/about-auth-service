@@ -58,6 +58,9 @@ dependencies {
     testCompile("junit:junit")
     // TODO: Use latest and pin down.
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    // TODO: Check if these are the latest.
+    compile 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
 }
 
 // Used for validating the API spec.
