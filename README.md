@@ -10,6 +10,10 @@ It's built with Gradle using Travis.
 
 It has an API spec that follows the OpenAPI Specification.
 
+## Running
+
+    make
+
 ---
 
 Check out my [personal site](https://andrewboutin.com)!

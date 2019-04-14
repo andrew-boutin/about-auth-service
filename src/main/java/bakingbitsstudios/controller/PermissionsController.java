@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
 @RestController
@@ -38,7 +38,7 @@ public class PermissionsController {
 
     @GetMapping("{permissionId}")
     public ResponseEntity<Permission> getPermission(HttpServletRequest httpServletRequest,
-                                                    @NotNull @PathVariable("permissionId") String permissionId) {
+                                                    @NotEmpty @PathVariable("permissionId") String permissionId) {
         Permission p = permissionsService.getPermission(permissionId);
 
         String self = httpServletRequest.getRequestURI();
