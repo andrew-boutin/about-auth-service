@@ -1,6 +1,7 @@
 package bakingbitsstudios.persistence;
 
 import bakingbitsstudios.domain.Permission;
+import bakingbitsstudios.exception.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -27,7 +28,7 @@ public class PermissionsDao {
         Permission p = permissions.get(permissionId);
 
         if (p == null) {
-            throw new RuntimeException(String.format("Permission %s not found.", permissionId));
+            throw new NotFoundException(permissionId, NotFoundException.ResourceType.Permission);
         }
 
         return p;
