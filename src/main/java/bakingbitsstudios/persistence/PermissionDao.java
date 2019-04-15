@@ -1,6 +1,7 @@
 package bakingbitsstudios.persistence;
 
 import bakingbitsstudios.domain.Permission;
+import bakingbitsstudios.exception.EntityType;
 import bakingbitsstudios.exception.NotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -9,11 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class PermissionsDao {
+public class PermissionDao {
 
     private Map<String, Permission> permissions;
 
-    public PermissionsDao() {
+    public PermissionDao() {
         permissions = new HashMap<>();
         permissions.put("1", Permission.builder().id("1").name("1").build());
         permissions.put("2", Permission.builder().id("2").name("2").build());
@@ -28,7 +29,7 @@ public class PermissionsDao {
         Permission p = permissions.get(permissionId);
 
         if (p == null) {
-            throw new NotFoundException(permissionId, NotFoundException.ResourceType.Permission);
+            throw new NotFoundException(permissionId, EntityType.Permission);
         }
 
         return p;

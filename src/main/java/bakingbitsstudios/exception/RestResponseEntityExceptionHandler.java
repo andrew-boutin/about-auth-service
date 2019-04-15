@@ -14,7 +14,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(NotFoundException ex, WebRequest request) {
-        String bodyOfResponse = String.format("%s with id '%s' not found.", ex.getResourceType(), ex.getId());
-        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        String errMsg = String.format("%s with id '%s' not found.", ex.getEntityType(), ex.getId());
+        ErrorResponse err = new ErrorResponse(HttpStatus.NOT_FOUND.value(), errMsg);
+        return handleExceptionInternal(ex, errMsg, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(ExistingEntity.class)
+    protected ResponseEntity<Object> handleAlreadyExists(ExistingEntity ex, WebRequest request) {
+        String errMsg = String.format("%s already exists.", ex.getEntityType());
+        ErrorResponse err = new ErrorResponse(HttpStatus.CONFLICT.value(), errMsg);
+        return handleExceptionInternal(ex, err, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }

@@ -3,6 +3,7 @@ package bakingbitsstudios.domain;
 import lombok.Builder;
 import lombok.Data;
 
+// TODO: timeCreated & timeUpdated here and spec. all other classes too.
 @Data
 public class Entitlement extends Resource {
 

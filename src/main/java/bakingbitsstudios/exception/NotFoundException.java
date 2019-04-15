@@ -1,21 +1,14 @@
 package bakingbitsstudios.exception;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@Builder
-public class NotFoundException extends RuntimeException {
+@Getter
+public class NotFoundException extends EntityException {
 
     private final String id;
-    private final ResourceType resourceType;
 
-    public NotFoundException(final String id, final ResourceType resourceType) {
+    public NotFoundException(final String id, final EntityType entityType) {
+        super(entityType);
         this.id = id;
-        this.resourceType = resourceType;
-    }
-
-    public enum ResourceType {
-        Permission
     }
 }

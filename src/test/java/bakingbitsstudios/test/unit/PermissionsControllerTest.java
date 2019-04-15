@@ -1,8 +1,8 @@
 package bakingbitsstudios.test.unit;
 
-import bakingbitsstudios.controller.PermissionsController;
+import bakingbitsstudios.controller.PermissionController;
 import bakingbitsstudios.domain.Permission;
-import bakingbitsstudios.service.PermissionsService;
+import bakingbitsstudios.service.PermissionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,16 +20,16 @@ import static org.junit.Assert.assertEquals;
 public class PermissionsControllerTest {
 
     @Mock
-    private PermissionsService service;
+    private PermissionService service;
 
     @Mock
     private HttpServletRequest request;
 
-    private PermissionsController controller;
+    private PermissionController controller;
 
     @Before
     public void setUp() {
-        controller = new PermissionsController(service);
+        controller = new PermissionController(service);
     }
 
     // TODO: List permissions.
