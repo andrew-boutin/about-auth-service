@@ -15,6 +15,8 @@ import java.util.UUID;
 @Component
 public class EntitlementDao {
 
+    private static final String INITIAL_VERSION = "1";
+
     // For now use an in memory store.
     private Map<String, Entitlement> entitlements;
 
@@ -39,7 +41,10 @@ public class EntitlementDao {
     public Entitlement createEntitlement(final Entitlement inputEntitlement) {
         String id = generateUUID();
 
-        Entitlement newEntitlement = Entitlement.builder().id(id).name(inputEntitlement.getName()).build();
+        long now = System.currentTimeMillis();
+
+        Entitlement newEntitlement = Entitlement.builder().id(id).name(inputEntitlement.getName())
+                .timeUpdated(now).timeCreated(now).version(INITIAL_VERSION).build();
 
         enforceNameUniqueness(inputEntitlement.getName());
 
@@ -57,8 +62,11 @@ public class EntitlementDao {
 
         enforceNameUniqueness(inputEntitlement.getName());
 
+        String nextVersion = String.valueOf(Integer.valueOf(existingEntitlement.getVersion()) + 1);
+
         Entitlement updatedEntitlement = Entitlement.builder().id(existingEntitlement.getId())
-                .name(inputEntitlement.getName()).build();
+                .timeCreated(existingEntitlement.getTimeCreated()).timeUpdated(System.currentTimeMillis())
+                .name(inputEntitlement.getName()).version(nextVersion).build();
 
         entitlements.put(id, updatedEntitlement);
 

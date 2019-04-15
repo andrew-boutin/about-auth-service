@@ -15,10 +15,16 @@ public class PermissionDao {
     private Map<String, Permission> permissions;
 
     public PermissionDao() {
+        String initialVersion = "1";
+        long now = System.currentTimeMillis();
+
         permissions = new HashMap<>();
-        permissions.put("1", Permission.builder().id("1").name("1").build());
-        permissions.put("2", Permission.builder().id("2").name("2").build());
-        permissions.put("3", Permission.builder().id("3").name("3").build());
+        permissions.put("1", Permission.builder().id("1").name("1").version(initialVersion)
+                .timeCreated(now).timeUpdated(now).build());
+        permissions.put("2", Permission.builder().id("2").name("2").version(initialVersion)
+                .timeCreated(now).timeUpdated(now).build());
+        permissions.put("3", Permission.builder().id("3").name("3").version(initialVersion)
+                .timeCreated(now).timeUpdated(now).build());
     }
 
     public Collection<Permission> listPermissions() {

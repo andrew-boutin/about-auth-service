@@ -17,9 +17,10 @@ public class User extends Resource {
 
     // IDE support for @SuperBuilder is lacking so we'll do the more verbose solution.
     @Builder
-    public User(final String id, final String name, final String self, final String tenantId,
-                final Boolean isSystemAdmin, final Boolean isTenantAdmin) {
-        super(id, name, self);
+    public User(final String id, final String name, final String version, final Long timeCreated,
+                final Long timeUpdated, final String self, final String tenantId, final Boolean isSystemAdmin,
+                final Boolean isTenantAdmin) {
+        super(id, name, version, timeCreated, timeUpdated, self);
         this.tenantId = tenantId;
         this.isSystemAdmin = isSystemAdmin;
         this.isTenantAdmin = isTenantAdmin;
